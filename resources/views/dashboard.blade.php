@@ -14,4 +14,11 @@
             </div>
         </div>
     </div>
+    <x-slot name="header">📊 Tableau de bord</x-slot>
+
+    <div class="p-4">
+        <a href="{{ route('documents.index') }}" class="btn btn-outline-dark">
+            📁 Gérer mes documents
+        </a>
+    </div>
 </x-app-layout>

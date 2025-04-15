@@ -10,6 +10,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 });
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/documents', [DocumentController::class, 'adminIndex'])->name('admin.documents');
+});
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
