@@ -11,7 +11,11 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('file_path');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            // $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
+
+
             $table->timestamps();
         });
     }

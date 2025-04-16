@@ -10,4 +10,20 @@ window.Echo = new Echo({
     forceTLS: true,
     encrypted: true,
 });
+window.Echo.channel('document.' + documentId)
+    .listen('.comment.posted', (e) => {
+        showToast(`${e.user_name} a commenté`);
+        // Insère dynamiquement le commentaire
+    });
+    window.Echo.private('App.Models.User.' + {{ auth()->id() }})
+    .notification((notification) => {
+        let list = document.getElementById('notif-list');
+        let badge = document.getElementById('notif-count');
+
+        let item = `<li class="dropdown-item">${notification.message}</li>`;
+        list.innerHTML = item + list.innerHTML;
+        badge.textContent = parseInt(badge.textContent) + 1;
+
+        showToast(notification.message, 'info'); // si tu as le toast visuel
+    });
 

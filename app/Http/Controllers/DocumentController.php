@@ -49,6 +49,7 @@ public function store(Request $request)
         'title' => 'required|string',
         'description' => 'nullable',
         'file' => 'required|file',
+        'category_id' => 'nullable|exists:categories,id'
     ]);
 
     $path = $request->file('file')->store('documents', 'public');
@@ -57,6 +58,7 @@ public function store(Request $request)
         'title' => $data['title'],
         'description' => $data['description'],
         'file_path' => $path,
+        'category_id'=>$data['category_id'],
         'user_id' => auth()->id(),
     ]);
 
@@ -82,6 +84,7 @@ public function update(Request $request, Document $document)
     $data = $request->validate([
         'title' => 'required|string',
         'description' => 'nullable',
+        'category_id' => 'nullable|exists:categories,id'
     ]);
 
     $document->update($data);

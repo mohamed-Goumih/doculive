@@ -45,5 +45,8 @@
     "Unauthorized": "Non autorisé",
     "Verify Email Address": "Vérifier l'adresse e-mail",
     "Whoops!": "Oups !",
+    "welcome" : "Bienvenue sur la plateforme de gestion de documents",
+    "new_comment ":"Nouveau commentaire ajouté.",
+    "Forgot your password?":"Mot de passe oublié",
     "You are receiving this email because we received a password reset request for your account.": "Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte."
 }

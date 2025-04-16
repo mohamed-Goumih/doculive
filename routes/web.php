@@ -11,8 +11,10 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/documents', [DocumentController::class, 'adminIndex'])->name('admin.documents');
+    Route::get('/admin/documents', [DocumentController::class, 'adminIndex'])
+    ->name('admin.documents');
 });
+
 
 
 Route::get('/dashboard', function () {

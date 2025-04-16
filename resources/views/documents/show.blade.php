@@ -3,34 +3,49 @@
         {{ $document->title }}
     </x-slot>
 
-    <p>{{ $document->description }}</p>
-    <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank">📥 Télécharger</a>
+    <div class="container py-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ $document->title }}</h5>
+                <p class="card-text">{{ $document->description }}</p>
 
-    <hr>
+                <a href="{{ asset('storage/' . $document->file_path) }}" class="btn btn-outline-primary mb-3" target="_blank">
+                    📥 Télécharger
+                </a>
 
-    <h5>💬 Commentaires</h5>
+                <hr>
 
-    <div id="comments">
-        @foreach ($document->comments as $comment)
-            <div class="alert alert-secondary">
-                <b>{{ $comment->user->name }} :</b> {{ $comment->content }}
+                {{-- Section commentaires avec Livewire --}}
+                <livewire:comment-section :document="$document" wire:poll.1s />
+                {{-- @livewire('comment-section', ['document' => $document]) --}}
+
             </div>
-        @endforeach
+        </div>
     </div>
 
-    <form method="POST" action="{{ route('comments.store') }}" id="comment-form">
-        @csrf
-        <input type="hidden" name="document_id" value="{{ $document->id }}">
-        <textarea name="content" class="form-control mb-2" placeholder="Ajouter un commentaire..." required></textarea>
-        <button class="btn btn-primary">💬 Poster</button>
-    </form>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.1/echo.iife.js"></script>
+    {{-- Toast visual (facultatif mais recommandé) --}}
     <script>
-        window.Echo.channel('document.{{ $document->id }}')
-            .listen('.comment.posted', (e) => {
-                let html = `<div class="alert alert-success"><b>${e.user_name} :</b> ${e.content}</div>`;
-                document.getElementById('comments').innerHTML += html;
-            });
+        window.addEventListener('toast', event => {
+            const message = event.detail.message;
+            const type = event.detail.type || 'success';
+
+            let toast = document.createElement('div');
+            toast.className = `toast align-items-center text-white bg-${type} border-0 show position-fixed bottom-0 end-0 m-3`;
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            `;
+
+            document.body.appendChild(toast);
+            new bootstrap.Toast(toast).show();
+
+            setTimeout(() => toast.remove(), 6000);
+        });
     </script>
 </x-app-layout>

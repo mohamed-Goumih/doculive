@@ -18,7 +18,7 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if (!auth()->check() || !auth()->user()->is_admin) {
-            abort(403);
+            abort(403,'accés refusé');
         }
     
         return $next($request);

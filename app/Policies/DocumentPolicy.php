@@ -37,12 +37,14 @@ class DocumentPolicy
      */
     public function update(User $user, Document $document)
     {
-        return $user->id === $document->user_id;
+        // return $user->id === $document->user_id;
+        return $user->is_admin || $user->id === $document->user_id;
     }
     
     public function delete(User $user, Document $document)
     {
-        return $user->id === $document->user_id;
+        // return $user->id === $document->user_id;
+        return $user->is_admin || $user->id === $document->user_id;
     }
     
 

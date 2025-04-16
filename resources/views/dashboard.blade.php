@@ -4,6 +4,13 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    @if (auth()->user()->is_admin)
+    <a href="{{ route('admin.documents') }}" 
+    class="text-sm text-yellow-600 underline mt-3 block">
+        🔐 Accès admin : tous les documents
+    </a>
+    @endif
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

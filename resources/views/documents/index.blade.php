@@ -14,15 +14,24 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="{{ route('documents.show', $doc) }}">{{ $doc->title }}</a>
                 <small>{{ format_date_fr($doc->created_at) }}</small>
+                <small class="text-muted">
+                    Catégorie : {{ $doc->category?->name ?? 'Aucune' }}
+                </small>
+                
             </li>
 
-<a href="{{ route('documents.edit', $doc) }}" class="btn btn-sm btn-outline-primary">✏️</a>
-
-<form action="{{ route('documents.destroy', $doc) }}" method="POST" 
-onsubmit="return confirm('Supprimer ce document ?');" class="d-inline">
-    @csrf @method('DELETE')
-    <button class="btn btn-sm btn-outline-danger">🗑️</button>
-</form>
+            @can('update', $doc)
+            <a href="{{ route('documents.edit', $doc) }}" class="btn btn-sm btn-warning">✏️</a>
+        @endcan
+        
+        @can('delete', $doc)
+            <form method="POST" action="{{ route('documents.destroy', $doc) }}" class="d-inline"
+             onsubmit="return confirm('Supprimer ?')">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-sm btn-danger">🗑️</button>
+            </form>
+        @endcan
 
         @endforeach
     </ul>

@@ -21,7 +21,7 @@ protected $policies = [
     public function boot(): void
     {
         
-            $this->registerPolicies();
+           // $this->registerPolicies();
     
             // Tu peux aussi définir des Gates ici si besoin
         
